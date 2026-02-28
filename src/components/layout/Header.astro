@@ -1,0 +1,169 @@
+---
+const navLinks = [
+  { label: 'Accueil',            href: '/' },
+  { label: '\u00c0 propos',          href: '/a-propos' },
+  { label: 'Boutique',           href: '/boutique' },
+  { label: 'Ateliers & Services',href: '/ateliers' },
+  { label: 'Contact',            href: '/contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div
+    id="header-bg"
+    class="absolute inset-0 bg-blanc-casse/80 backdrop-blur-md transition-all duration-300 opacity-0"
+  ></div>
+
+  <div class="container-site relative flex items-center justify-between h-16 lg:h-20">
+
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-2 no-underline shrink-0" aria-label="Savonnerie Loulye \u2014 Accueil">
+      <!-- Ic\u00f4ne fleur stylis\u00e9e -->
+      <svg class="w-9 h-9" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="20" cy="20" r="19" stroke="#C4956A" stroke-width="1.5" fill="#FDFBF8"/>
+        <circle cx="20" cy="20" r="4" fill="#C4956A"/>
+        <ellipse cx="20" cy="11" rx="3" ry="5" fill="#A8B5A0" opacity="0.7"/>
+        <ellipse cx="20" cy="29" rx="3" ry="5" fill="#A8B5A0" opacity="0.7"/>
+        <ellipse cx="11" cy="20" rx="5" ry="3" fill="#A8B5A0" opacity="0.7"/>
+        <ellipse cx="29" cy="20" rx="5" ry="3" fill="#A8B5A0" opacity="0.7"/>
+      </svg>
+      <span class="text-lg font-serif font-semibold tracking-tight text-brand-800">
+        Savonnerie <span class="text-accent">Loulye</span>
+      </span>
+    </a>
+
+    <!-- Navigation desktop -->
+    <nav class="hidden lg:flex items-center gap-1" aria-label="Navigation principale">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'px-3 py-2 text-sm font-medium rounded-lg transition-all duration-200 no-underline',
+            currentPath === link.href
+              ? 'text-accent bg-accent-50'
+              : 'text-brand-700 hover:text-accent hover:bg-accent-50/50',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- CTA desktop -->
+    <div class="hidden lg:flex items-center">
+      <a href="/boutique" class="btn-primary text-sm">
+        Voir la boutique
+      </a>
+    </div>
+
+    <!-- Burger mobile -->
+    <button
+      id="menu-toggle"
+      class="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg hover:bg-beige transition-colors"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span id="burger-line-1" class="block w-5 h-0.5 bg-brand-700 rounded transition-all duration-300"></span>
+      <span id="burger-line-2" class="block w-5 h-0.5 bg-brand-700 rounded mt-1.5 transition-all duration-300"></span>
+      <span id="burger-line-3" class="block w-5 h-0.5 bg-brand-700 rounded mt-1.5 transition-all duration-300"></span>
+    </button>
+  </div>
+
+  <!-- Menu mobile -->
+  <div
+    id="mobile-menu"
+    class="lg:hidden absolute top-full left-0 right-0 bg-blanc-casse/98 backdrop-blur-xl border-t border-lin transform -translate-y-2 opacity-0 pointer-events-none transition-all duration-300"
+    aria-hidden="true"
+  >
+    <nav class="container-site py-6 flex flex-col gap-1" aria-label="Navigation mobile">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'block px-4 py-3 text-base font-medium rounded-xl transition-all duration-200 no-underline',
+            currentPath === link.href
+              ? 'text-accent bg-accent-50'
+              : 'text-brand-700 hover:text-accent hover:bg-accent-50/50',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+      <hr class="my-3 border-lin" />
+      <a
+        href="/boutique"
+        class="block px-4 py-3 text-center text-base font-semibold text-white bg-accent rounded-xl hover:bg-accent-500 transition-all no-underline"
+      >
+        Voir la boutique
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Spacer -->
+<div class="h-16 lg:h-20"></div>
+
+<script>
+  const header = document.getElementById('site-header');
+  const headerBg = document.getElementById('header-bg');
+
+  function updateHeader() {
+    if (!header || !headerBg) return;
+    if (window.scrollY > 20) {
+      headerBg.classList.add('opacity-100');
+      header.classList.add('shadow-sm');
+    } else {
+      headerBg.classList.remove('opacity-100');
+      header.classList.remove('shadow-sm');
+    }
+  }
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const burgerLines = [
+    document.getElementById('burger-line-1'),
+    document.getElementById('burger-line-2'),
+    document.getElementById('burger-line-3'),
+  ];
+  let menuOpen = false;
+
+  menuToggle?.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    if (mobileMenu) {
+      if (menuOpen) {
+        mobileMenu.classList.remove('-translate-y-2', 'opacity-0', 'pointer-events-none');
+        mobileMenu.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+        mobileMenu.setAttribute('aria-hidden', 'false');
+      } else {
+        mobileMenu.classList.add('-translate-y-2', 'opacity-0', 'pointer-events-none');
+        mobileMenu.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      }
+    }
+    if (burgerLines[0] && burgerLines[1] && burgerLines[2]) {
+      if (menuOpen) {
+        burgerLines[0].classList.add('rotate-45', 'translate-y-[4px]');
+        burgerLines[1].classList.add('opacity-0');
+        burgerLines[2].classList.add('-rotate-45', '-translate-y-[4px]');
+      } else {
+        burgerLines[0].classList.remove('rotate-45', 'translate-y-[4px]');
+        burgerLines[1].classList.remove('opacity-0');
+        burgerLines[2].classList.remove('-rotate-45', '-translate-y-[4px]');
+      }
+    }
+    menuToggle?.setAttribute('aria-expanded', String(menuOpen));
+    menuToggle?.setAttribute('aria-label', menuOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+  });
+
+  mobileMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => { if (menuOpen) menuToggle?.click(); });
+  });
+</script>

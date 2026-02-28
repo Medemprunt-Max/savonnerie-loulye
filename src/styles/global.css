@@ -1,43 +1,74 @@
+/* ─────────────────────────────────────────────────────────
+   global.css — Savonnerie Loulye
+   ───────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
+
   body {
-    @apply font-sans text-gray-800 bg-blanc-casse leading-relaxed;
+    @apply font-sans text-brand-700 bg-blanc-casse leading-relaxed;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
+
+  h1, h2, h3 {
+    @apply font-serif font-semibold text-brand-800 leading-tight;
   }
+
+  h4, h5, h6 {
+    @apply font-sans font-semibold text-brand-700;
+  }
+
   a {
-    @apply transition-colors duration-200;
+    @apply text-accent transition-colors duration-200;
+  }
+  a:hover {
+    @apply text-accent-600;
+  }
+
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-accent;
   }
 }
 
 @layer components {
   .container-site {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply mx-auto max-w-site px-5 sm:px-8 lg:px-10;
   }
+
+  .section-padding {
+    @apply py-16 lg:py-24;
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center px-6 py-3 bg-ocre text-white font-medium rounded-sm hover:bg-ocre-dark transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-7 py-3.5 text-sm font-semibold
+           text-white bg-accent rounded-full
+           hover:bg-accent-500 hover:shadow-soft
+           transition-all duration-200 no-underline;
   }
+
   .btn-secondary {
-    @apply inline-flex items-center justify-center px-6 py-3 border border-ocre text-ocre font-medium rounded-sm hover:bg-ocre hover:text-white transition-colors duration-200;
+    @apply inline-flex items-center justify-center px-7 py-3.5 text-sm font-semibold
+           text-accent border-2 border-accent/30 rounded-full
+           hover:border-accent hover:bg-accent-50
+           transition-all duration-200 no-underline;
   }
 }
 
-/* ── Scroll fade-in animations ── */
-.fade-in {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+@layer utilities {
+  .prose-width {
+    @apply max-w-[65ch];
+  }
 }

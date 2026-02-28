@@ -1,0 +1,351 @@
+---
+/**
+ * ateliers.astro — Page Ateliers & Services
+ * ─────────────────────────────────────────────────────────
+ * Sections :
+ *   1. Hero introduction ateliers
+ *   2. Nos ateliers (grille de 4 cibles)
+ *   3. Savons personnalisés
+ *   4. CTA devis
+ */
+
+import Layout from '../components/layout/Layout.astro';
+---
+
+<Layout
+  title="Ateliers & Services — Savonnerie Loulye"
+  description="Ateliers de fabrication de savons naturels pour écoles, associations, entreprises et hébergements. Savons personnalisés sur mesure."
+>
+
+  <!-- ═══════════════════════════════════════════════════════
+       1. HERO
+       ═══════════════════════════════════════════════════════ -->
+  <section class="relative overflow-hidden bg-beige">
+    <div class="container-site section-padding">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="text-sm font-medium text-accent uppercase tracking-wider mb-4">Ateliers & Services</p>
+        <h1 class="text-display-sm lg:text-display-md font-serif text-brand-800 mb-6">
+          Partageons ensemble<br />
+          <span class="text-accent">l'art du savon</span>
+        </h1>
+        <p class="text-lg text-brand-600 leading-relaxed max-w-2xl mx-auto">
+          La Savonnerie Loulye propose des ateliers de fabrication de cosmétiques
+          et produits d'hygiène naturels, adaptés à tous les publics.
+          Une expérience sensorielle et créative, au cœur des montagnes.
+        </p>
+      </div>
+    </div>
+    <!-- Décoration -->
+    <div class="absolute top-0 left-0 w-72 h-72 bg-accent/5 rounded-full blur-3xl -translate-y-1/3 -translate-x-1/3"></div>
+    <div class="absolute bottom-0 right-0 w-56 h-56 bg-vert-doux/10 rounded-full blur-3xl translate-y-1/3 translate-x-1/3"></div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       2. NOS ATELIERS — 4 cibles
+       ═══════════════════════════════════════════════════════ -->
+  <section class="bg-blanc-casse">
+    <div class="container-site section-padding">
+      <div class="text-center mb-14">
+        <h2 class="text-display-sm font-serif text-brand-800 mb-4">Nos ateliers</h2>
+        <p class="text-lg text-brand-600 max-w-xl mx-auto">
+          Des formats sur mesure pour chaque public : ludiques, pédagogiques
+          ou créatifs, nos ateliers s'adaptent à vos envies.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Atelier 1 : Écoles & centres sociaux -->
+        <div class="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
+          <div class="aspect-[16/9] overflow-hidden bg-lin">
+            <img
+              src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=340&fit=crop"
+              alt="Atelier savonnerie pour enfants"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6 lg:p-8">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-full bg-accent-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342" />
+                </svg>
+              </div>
+              <span class="text-xs font-medium text-accent uppercase tracking-wider">Éducation</span>
+            </div>
+            <h3 class="text-xl font-serif text-brand-800 mb-3">Écoles & centres sociaux</h3>
+            <p class="text-brand-600 leading-relaxed">
+              Des ateliers pédagogiques pour découvrir la chimie naturelle de
+              la saponification. Adaptés aux enfants dès 6 ans, ils allient
+              apprentissage scientifique et créativité. Chaque participant repart
+              avec son propre savon !
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-brand-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Durée : 1 h 30 à 2 h
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Groupes de 8 à 20 personnes
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Sur place ou dans vos locaux
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Atelier 2 : Associations & particuliers -->
+        <div class="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
+          <div class="aspect-[16/9] overflow-hidden bg-lin">
+            <img
+              src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=600&h=340&fit=crop"
+              alt="Atelier de fabrication de savons entre amis"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6 lg:p-8">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z" />
+                </svg>
+              </div>
+              <span class="text-xs font-medium text-green uppercase tracking-wider">Loisirs</span>
+            </div>
+            <h3 class="text-xl font-serif text-brand-800 mb-3">Associations & particuliers</h3>
+            <p class="text-brand-600 leading-relaxed">
+              Un moment convivial pour apprendre à fabriquer ses propres savons
+              ou cosmétiques maison. Idéal pour les associations, les groupes
+              d'amis, les EVJF ou les anniversaires. Une activité originale et
+              100 % naturelle.
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-brand-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Durée : 2 h à 3 h
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Groupes de 4 à 12 personnes
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Matériel et ingrédients fournis
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Atelier 3 : Entreprises & team building -->
+        <div class="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
+          <div class="aspect-[16/9] overflow-hidden bg-lin">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=340&fit=crop"
+              alt="Team building en entreprise"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6 lg:p-8">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-full bg-accent-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 0 0 .75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 0 0-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0 1 12 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 0 1-.673-.38m0 0A2.18 2.18 0 0 1 3 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 0 1 3.413-.387m7.5 0V5.25A2.25 2.25 0 0 0 13.5 3h-3a2.25 2.25 0 0 0-2.25 2.25v.894m7.5 0a48.667 48.667 0 0 0-7.5 0M12 12.75h.008v.008H12v-.008Z" />
+                </svg>
+              </div>
+              <span class="text-xs font-medium text-accent uppercase tracking-wider">Entreprise</span>
+            </div>
+            <h3 class="text-xl font-serif text-brand-800 mb-3">Entreprises & team building</h3>
+            <p class="text-brand-600 leading-relaxed">
+              Offrez à vos équipes une expérience de cohésion unique et
+              éco-responsable. Nos ateliers de team building favorisent
+              la créativité, le travail d'équipe et la déconnexion, le tout
+              dans un cadre naturel exceptionnel.
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-brand-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Demi-journée ou journée complète
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Jusqu'à 30 participants
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Devis personnalisé
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Atelier 4 : Gîtes & hôtels -->
+        <div class="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-shadow duration-300">
+          <div class="aspect-[16/9] overflow-hidden bg-lin">
+            <img
+              src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=340&fit=crop"
+              alt="Gîte de montagne avec produits d'accueil"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              loading="lazy"
+            />
+          </div>
+          <div class="p-6 lg:p-8">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center">
+                <svg class="w-4 h-4 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+              </div>
+              <span class="text-xs font-medium text-green uppercase tracking-wider">Hébergement</span>
+            </div>
+            <h3 class="text-xl font-serif text-brand-800 mb-3">Gîtes, hôtels & chambres d'hôtes</h3>
+            <p class="text-brand-600 leading-relaxed">
+              Proposez à vos visiteurs une activité locale et authentique.
+              Nous nous déplaçons dans vos locaux pour animer des ateliers
+              savonnerie, une expérience mémorable qui prolonge le séjour
+              et valorise votre établissement.
+            </p>
+            <ul class="mt-4 space-y-2 text-sm text-brand-600">
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Ateliers en soirée ou en journée
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Produits d'accueil personnalisés en option
+              </li>
+              <li class="flex items-start gap-2">
+                <svg class="w-4 h-4 text-vert-doux shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>
+                Partenariat saison possible
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       3. SAVONS PERSONNALISÉS
+       ═══════════════════════════════════════════════════════ -->
+  <section class="bg-beige">
+    <div class="container-site section-padding">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+        <!-- Image -->
+        <div class="relative order-2 lg:order-1">
+          <div class="aspect-[4/3] rounded-3xl overflow-hidden bg-lin">
+            <img
+              src="https://images.unsplash.com/photo-1607006344380-b6775a0824a7?w=800&h=600&fit=crop"
+              alt="Savons personnalisés emballés avec soin"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <!-- Badge -->
+          <div class="absolute -bottom-4 -right-4 lg:-bottom-6 lg:-right-6 bg-blanc-casse rounded-2xl shadow-card-hover p-4 lg:p-5">
+            <p class="text-2xl font-serif font-bold text-accent">Sur mesure</p>
+            <p class="text-xs text-brand-600">100 % personnalisable</p>
+          </div>
+        </div>
+
+        <!-- Texte -->
+        <div class="order-1 lg:order-2">
+          <p class="text-sm font-medium text-accent uppercase tracking-wider mb-4">Service sur mesure</p>
+          <h2 class="text-display-sm font-serif text-brand-800 mb-6">
+            Savons personnalisés
+          </h2>
+          <p class="text-lg text-brand-600 leading-relaxed mb-6">
+            Vous souhaitez offrir des savons à votre image ? La Savonnerie Loulye
+            crée des savons personnalisés pour vos événements, vos clients ou
+            vos collaborateurs.
+          </p>
+
+          <div class="space-y-4 mb-8">
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 shrink-0 rounded-full bg-accent-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-medium text-brand-800">Cadeaux d'entreprise</h3>
+                <p class="text-sm text-brand-600">Offrez un cadeau original et éco-responsable à vos clients, partenaires ou salariés.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 shrink-0 rounded-full bg-green-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-medium text-brand-800">Accueil clients & hébergements</h3>
+                <p class="text-sm text-brand-600">Des savons d'accueil gravés à votre logo pour gîtes, hôtels et chambres d'hôtes.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="w-10 h-10 shrink-0 rounded-full bg-accent-50 flex items-center justify-center">
+                <svg class="w-5 h-5 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-medium text-brand-800">Événements & mariages</h3>
+                <p class="text-sm text-brand-600">Des cadeaux invités uniques : forme, parfum, couleur et packaging personnalisés.</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-sm text-brand-500 italic">
+            À partir de 30 pièces. Délai de fabrication : 6 à 8 semaines (cure incluse).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       4. CTA DEVIS
+       ═══════════════════════════════════════════════════════ -->
+  <section class="bg-brand-800 text-white">
+    <div class="container-site section-padding text-center">
+      <h2 class="text-display-sm font-serif text-white mb-4">
+        Envie d'organiser un atelier ?
+      </h2>
+      <p class="text-lg text-white/70 max-w-xl mx-auto mb-8">
+        Décrivez-nous votre projet et nous vous proposerons un devis adapté
+        à vos besoins, votre budget et le nombre de participants.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="/contact?sujet=devis-atelier"
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-accent hover:bg-accent-500 text-white font-semibold transition-all duration-200 no-underline shadow-lg hover:shadow-xl"
+        >
+          Demander un devis
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+          </svg>
+        </a>
+        <a
+          href="/contact?sujet=savons-personnalises"
+          class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-all duration-200 no-underline"
+        >
+          Savons personnalisés
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
