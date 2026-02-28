@@ -1,0 +1,342 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Panier — Savonnerie Loulye" description="Votre panier d'achat — Savonnerie Loulye">
+
+  <!-- ═══ BREADCRUMB ═══ -->
+  <nav class="bg-beige py-4" aria-label="Fil d'Ariane">
+    <div class="container-site">
+      <ol class="flex items-center gap-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:text-ocre transition-colors">Accueil</a></li>
+        <li><span class="mx-1">/</span></li>
+        <li><a href="/boutique" class="hover:text-ocre transition-colors">Boutique</a></li>
+        <li><span class="mx-1">/</span></li>
+        <li class="text-gray-800 font-medium">Panier</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ═══ PANIER ═══ -->
+  <section class="py-12 sm:py-16">
+    <div class="container-site">
+      <h1 class="font-serif text-3xl sm:text-4xl font-semibold text-gray-800 mb-10">Mon panier</h1>
+
+      <!-- ─── État vide ─── -->
+      <div id="cart-empty" class="hidden text-center py-16">
+        <svg class="mx-auto w-20 h-20 text-lin mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+        </svg>
+        <h2 class="font-serif text-2xl font-semibold text-gray-800 mb-3">Votre panier est vide</h2>
+        <p class="text-gray-500 mb-8 max-w-md mx-auto">
+          Découvrez nos savons artisanaux, bougies et cosmétiques naturels fabriqués avec soin dans la vallée du Valgaudemar.
+        </p>
+        <a href="/boutique" class="btn-primary gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          Découvrir la boutique
+        </a>
+      </div>
+
+      <!-- ─── Panier rempli ─── -->
+      <div id="cart-filled" class="hidden">
+        <div class="lg:grid lg:grid-cols-12 lg:gap-10">
+
+          <!-- ═══ TABLEAU ARTICLES ═══ -->
+          <div class="lg:col-span-8">
+
+            <!-- En-tête tableau (desktop) -->
+            <div class="hidden sm:grid sm:grid-cols-12 gap-4 pb-4 border-b border-lin/60 text-sm font-medium text-gray-500 uppercase tracking-wide">
+              <div class="col-span-6">Produit</div>
+              <div class="col-span-2 text-center">Prix</div>
+              <div class="col-span-2 text-center">Quantité</div>
+              <div class="col-span-2 text-right">Sous-total</div>
+            </div>
+
+            <!-- Liste des articles -->
+            <div id="cart-items" class="divide-y divide-lin/40">
+              <!-- Les articles sont injectés dynamiquement par JS -->
+            </div>
+
+            <!-- Lien continuer les achats -->
+            <div class="mt-8">
+              <a href="/boutique" class="inline-flex items-center gap-2 text-sm font-medium text-ocre hover:text-ocre-dark transition-colors group">
+                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12"/></svg>
+                Continuer mes achats
+              </a>
+            </div>
+          </div>
+
+          <!-- ═══ RÉCAPITULATIF ═══ -->
+          <aside class="lg:col-span-4 mt-10 lg:mt-0">
+            <div class="bg-beige rounded-sm p-6 sm:p-8 sticky top-24">
+              <h2 class="font-serif text-xl font-semibold text-gray-800 mb-6">Récapitulatif</h2>
+
+              <div class="space-y-3 text-sm">
+                <div class="flex justify-between text-gray-600">
+                  <span>Sous-total</span>
+                  <span id="subtotal" class="font-medium text-gray-800">0,00 €</span>
+                </div>
+                <div class="flex justify-between text-gray-600">
+                  <span>Livraison</span>
+                  <span id="shipping" class="font-medium text-gray-800">5,90 €</span>
+                </div>
+                <div id="free-shipping-msg" class="hidden text-xs text-vert-doux font-medium flex items-center gap-1.5">
+                  <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                  Livraison offerte !
+                </div>
+
+                <!-- Barre de progression livraison gratuite -->
+                <div id="shipping-progress-wrapper" class="pt-2">
+                  <div class="flex justify-between text-xs text-gray-500 mb-1.5">
+                    <span id="shipping-progress-text">Plus que <span id="remaining-amount" class="font-semibold text-ocre">50,00 €</span> pour la livraison offerte</span>
+                  </div>
+                  <div class="w-full bg-lin/60 rounded-full h-1.5 overflow-hidden">
+                    <div id="shipping-progress-bar" class="h-full bg-ocre rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border-t border-lin/60 mt-5 pt-5">
+                <div class="flex justify-between items-baseline">
+                  <span class="text-base font-semibold text-gray-800">Total</span>
+                  <span id="total" class="text-xl font-bold text-ocre">0,00 €</span>
+                </div>
+              </div>
+
+              <!-- TODO: Ce bouton déclenchera le checkout Stripe (prompt 6) -->
+              <!-- Le handler appellera POST /api/create-checkout-session avec les items du panier -->
+              <button
+                id="checkout-btn"
+                class="mt-6 w-full btn-primary gap-2 opacity-50 cursor-not-allowed"
+                disabled
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Commander
+              </button>
+              <p id="checkout-notice" class="mt-3 text-xs text-center text-gray-500 bg-blanc-casse rounded-sm py-2 px-3">
+                🔒 Paiement en ligne sécurisé bientôt disponible
+              </p>
+
+              <!-- Réassurance -->
+              <div class="mt-6 pt-5 border-t border-lin/60 space-y-3">
+                <div class="flex items-start gap-3 text-sm text-gray-600">
+                  <svg class="w-5 h-5 text-vert-doux flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                  <span>Paiement 100% sécurisé</span>
+                </div>
+                <div class="flex items-start gap-3 text-sm text-gray-600">
+                  <svg class="w-5 h-5 text-vert-doux flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0H21M3.375 14.25h.863a2.25 2.25 0 012.18 1.7l.194.77H21"/></svg>
+                  <span>Livraison offerte dès 50 €</span>
+                </div>
+                <div class="flex items-start gap-3 text-sm text-gray-600">
+                  <svg class="w-5 h-5 text-vert-doux flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                  <span>Fabriqué à la main avec amour</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import {
+    getCartItems,
+    getCartTotal,
+    getCartCount,
+    updateQuantity,
+    removeFromCart,
+  } from '../lib/cart.js';
+
+  // ── Constants ──
+  const SHIPPING_COST = 5.90;
+  const FREE_SHIPPING_THRESHOLD = 50;
+
+  // ── DOM refs ──
+  const cartEmpty = document.getElementById('cart-empty');
+  const cartFilled = document.getElementById('cart-filled');
+  const cartItemsContainer = document.getElementById('cart-items');
+  const subtotalEl = document.getElementById('subtotal');
+  const shippingEl = document.getElementById('shipping');
+  const freeShippingMsg = document.getElementById('free-shipping-msg');
+  const shippingProgressWrapper = document.getElementById('shipping-progress-wrapper');
+  const shippingProgressBar = document.getElementById('shipping-progress-bar');
+  const remainingAmountEl = document.getElementById('remaining-amount');
+  const shippingProgressText = document.getElementById('shipping-progress-text');
+  const totalEl = document.getElementById('total');
+
+  // ── Format price ──
+  function formatPrice(price: number): string {
+    return price.toFixed(2).replace('.', ',') + ' €';
+  }
+
+  // ── Render a single cart item row ──
+  function renderCartItem(item: { slug: string; name: string; price: number; image: string; qty: number }): string {
+    const lineTotal = item.price * item.qty;
+    return `
+      <div class="cart-item py-6 sm:grid sm:grid-cols-12 sm:gap-4 sm:items-center" data-slug="${item.slug}">
+        <!-- Mobile: flex layout / Desktop: grid layout -->
+        <div class="sm:col-span-6 flex items-center gap-4">
+          <a href="/boutique/${item.slug}" class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 overflow-hidden rounded-sm bg-white shadow-sm">
+            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" loading="lazy" />
+          </a>
+          <div class="flex-1 min-w-0">
+            <a href="/boutique/${item.slug}" class="font-serif text-base sm:text-lg font-semibold text-gray-800 hover:text-ocre transition-colors line-clamp-2">${item.name}</a>
+            <p class="mt-1 text-sm text-gray-500 sm:hidden">${formatPrice(item.price)}</p>
+          </div>
+        </div>
+
+        <!-- Prix unitaire (desktop) -->
+        <div class="hidden sm:block sm:col-span-2 text-center text-sm text-gray-600">
+          ${formatPrice(item.price)}
+        </div>
+
+        <!-- Quantité + Actions -->
+        <div class="sm:col-span-2 flex items-center justify-between sm:justify-center mt-4 sm:mt-0">
+          <div class="flex items-center border border-lin rounded-sm">
+            <button
+              class="qty-btn-minus px-3 py-1.5 text-gray-600 hover:text-ocre transition-colors text-sm font-medium"
+              data-slug="${item.slug}"
+              aria-label="Diminuer la quantité de ${item.name}"
+            >−</button>
+            <span class="qty-display px-3 py-1.5 text-sm font-medium text-gray-800 min-w-[2.5rem] text-center border-x border-lin">${item.qty}</span>
+            <button
+              class="qty-btn-plus px-3 py-1.5 text-gray-600 hover:text-ocre transition-colors text-sm font-medium"
+              data-slug="${item.slug}"
+              aria-label="Augmenter la quantité de ${item.name}"
+            >+</button>
+          </div>
+          <button
+            class="remove-btn sm:hidden ml-3 p-2 text-gray-400 hover:text-red-500 transition-colors"
+            data-slug="${item.slug}"
+            aria-label="Supprimer ${item.name} du panier"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>
+          </button>
+        </div>
+
+        <!-- Sous-total + Supprimer (desktop) -->
+        <div class="hidden sm:flex sm:col-span-2 items-center justify-end gap-3">
+          <span class="line-total text-sm font-semibold text-gray-800">${formatPrice(lineTotal)}</span>
+          <button
+            class="remove-btn p-1.5 text-gray-400 hover:text-red-500 transition-colors rounded-sm hover:bg-red-50"
+            data-slug="${item.slug}"
+            aria-label="Supprimer ${item.name} du panier"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  // ── Main render function ──
+  function renderCart() {
+    const items = getCartItems();
+
+    if (items.length === 0) {
+      cartEmpty?.classList.remove('hidden');
+      cartFilled?.classList.add('hidden');
+      return;
+    }
+
+    cartEmpty?.classList.add('hidden');
+    cartFilled?.classList.remove('hidden');
+
+    // Render items
+    if (cartItemsContainer) {
+      cartItemsContainer.innerHTML = items.map(renderCartItem).join('');
+    }
+
+    // Calculate totals
+    const subtotal = getCartTotal();
+    const isFreeShipping = subtotal >= FREE_SHIPPING_THRESHOLD;
+    const shipping = isFreeShipping ? 0 : SHIPPING_COST;
+    const total = subtotal + shipping;
+
+    // Update DOM
+    if (subtotalEl) subtotalEl.textContent = formatPrice(subtotal);
+    if (shippingEl) {
+      shippingEl.textContent = isFreeShipping ? 'Offerte' : formatPrice(SHIPPING_COST);
+      shippingEl.classList.toggle('text-vert-doux', isFreeShipping);
+    }
+    if (freeShippingMsg) freeShippingMsg.classList.toggle('hidden', !isFreeShipping);
+    if (totalEl) totalEl.textContent = formatPrice(total);
+
+    // Shipping progress bar
+    if (isFreeShipping) {
+      shippingProgressWrapper?.classList.add('hidden');
+    } else {
+      shippingProgressWrapper?.classList.remove('hidden');
+      const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+      const progress = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
+      if (remainingAmountEl) remainingAmountEl.textContent = formatPrice(remaining);
+      if (shippingProgressBar) shippingProgressBar.style.width = `${progress}%`;
+    }
+
+    // Bind events
+    bindCartEvents();
+  }
+
+  // ── Event bindings ──
+  function bindCartEvents() {
+    // Quantity minus
+    document.querySelectorAll('.qty-btn-minus').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const slug = (e.currentTarget as HTMLButtonElement).dataset.slug;
+        if (!slug) return;
+        const items = getCartItems();
+        const item = items.find((i: { slug: string }) => i.slug === slug);
+        if (item && item.qty > 1) {
+          updateQuantity(slug, item.qty - 1);
+        } else if (item && item.qty <= 1) {
+          removeFromCart(slug);
+        }
+        renderCart();
+      });
+    });
+
+    // Quantity plus
+    document.querySelectorAll('.qty-btn-plus').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const slug = (e.currentTarget as HTMLButtonElement).dataset.slug;
+        if (!slug) return;
+        const items = getCartItems();
+        const item = items.find((i: { slug: string }) => i.slug === slug);
+        if (item && item.qty < 10) {
+          updateQuantity(slug, item.qty + 1);
+          renderCart();
+        }
+      });
+    });
+
+    // Remove buttons
+    document.querySelectorAll('.remove-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const slug = (e.currentTarget as HTMLButtonElement).dataset.slug;
+        if (!slug) return;
+
+        // Animate removal
+        const row = document.querySelector(`.cart-item[data-slug="${slug}"]`);
+        if (row) {
+          row.classList.add('opacity-0', 'translate-x-4', 'transition-all', 'duration-300');
+          setTimeout(() => {
+            removeFromCart(slug);
+            renderCart();
+          }, 300);
+        } else {
+          removeFromCart(slug);
+          renderCart();
+        }
+      });
+    });
+  }
+
+  // ── Initialize ──
+  renderCart();
+
+  // Listen for external cart changes (e.g. another tab)
+  window.addEventListener('storage', () => renderCart());
+</script>
