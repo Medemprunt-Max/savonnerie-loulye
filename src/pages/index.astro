@@ -1,0 +1,34 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Savonnerie Loulye — Savons artisanaux du Valgaudemar">
+  <section class="relative bg-beige">
+    <div class="container-site py-24 md:py-36 text-center">
+      <h1 class="font-serif text-4xl md:text-6xl font-semibold text-gray-800 leading-tight mb-6">Des savons artisanaux<br /><span class="text-ocre">faits avec amour</span></h1>
+      <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">Fabriques a la main a Aspres-les-Corps, au coeur de la vallee du Valgaudemar, avec des ingredients naturels respectueux de votre peau et de l environnement.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/boutique" class="btn-primary">Decouvrir la boutique</a>
+        <a href="/a-propos" class="btn-secondary">Notre histoire</a>
+      </div>
+    </div>
+  </section>
+  <section class="py-20">
+    <div class="container-site text-center">
+      <h2 class="font-serif text-3xl md:text-4xl font-semibold text-gray-800 mb-4">Nos creations</h2>
+      <p class="text-gray-600 max-w-xl mx-auto mb-12">Savons surgras, bougies parfumees, cosmetiques solides... Chaque produit est une invitation a la douceur.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[1, 2, 3].map((i) => (
+          <div class="bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+            <div class="aspect-square bg-lin/30 flex items-center justify-center"><span class="text-lin text-sm">Image produit {i}</span></div>
+            <div class="p-6">
+              <h3 class="font-serif text-lg font-semibold text-gray-800 mb-1">Savon Placeholder {i}</h3>
+              <p class="text-sm text-gray-500 mb-3">Description courte du produit</p>
+              <p class="text-ocre font-semibold">8,50 EUR</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
