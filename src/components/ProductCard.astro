@@ -5,31 +5,51 @@ interface Props {
   price: number;
   image: string;
   shortDescription: string;
+  category?: string;
 }
 
-const { slug, name, price, image, shortDescription } = Astro.props;
+const { slug, name, price, image, shortDescription, category } = Astro.props;
+
+const categoryLabels: Record<string, string> = {
+  savon: 'Savon',
+  cosmetique: 'Cosmétique',
+  bougie: 'Bougie & Fondant',
+  accessoire: 'Accessoire',
+  coffret: 'Coffret',
+};
 ---
 
-<a href={`/boutique/${slug}`} class="group block">
-  <article class="bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-    <div class="aspect-square overflow-hidden">
+<a href={`/boutique/${slug}`} class="group block h-full">
+  <article class="bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
+    <div class="aspect-square overflow-hidden relative">
       <img
         src={image}
         alt={name}
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         loading="lazy"
       />
+      {category && (
+        <span class="absolute top-3 left-3 bg-blanc-casse/90 backdrop-blur-sm text-gray-700 text-xs font-medium px-2.5 py-1 rounded-sm">
+          {categoryLabels[category] || category}
+        </span>
+      )}
     </div>
-    <div class="p-5">
+    <div class="p-5 flex flex-col flex-1">
       <h3 class="font-serif text-lg font-semibold text-gray-800 group-hover:text-ocre transition-colors">
         {name}
       </h3>
-      <p class="mt-1 text-sm text-gray-500 leading-relaxed">
+      <p class="mt-1 text-sm text-gray-500 leading-relaxed flex-1">
         {shortDescription}
       </p>
-      <p class="mt-3 text-ocre font-semibold text-lg">
-        {price.toFixed(2).replace('.', ',')}&nbsp;&euro;
-      </p>
+      <div class="mt-3 flex items-center justify-between">
+        <p class="text-ocre font-semibold text-lg">
+          {price.toFixed(2).replace('.', ',')}&nbsp;&euro;
+        </p>
+        <span class="text-sm text-ocre font-medium group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+          Voir
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </span>
+      </div>
     </div>
   </article>
 </a>

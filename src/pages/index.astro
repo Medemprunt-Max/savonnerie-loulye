@@ -106,11 +106,12 @@ const featuredProducts = allProducts.filter((p) => p.data.featured);
         {featuredProducts.map((product) => (
           <div class="fade-in">
             <ProductCard
-              slug={product.id}
+              slug={product.id.replace(/\.md$/, '')}
               name={product.data.name}
               price={product.data.price}
               image={product.data.image}
               shortDescription={product.data.shortDescription}
+              category={product.data.category}
             />
           </div>
         ))}

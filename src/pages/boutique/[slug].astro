@@ -1,0 +1,255 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((product) => ({
+    params: { slug: product.id.replace(/\.md$/, '') },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props;
+const { name, price, image, images, description, category, weight, ingredients, inStock } = product.data;
+
+const categoryLabels: Record<string, string> = {
+  savon: 'Savon',
+  cosmetique: 'Cosmétique',
+  bougie: 'Bougie & Fondant',
+  accessoire: 'Accessoire',
+  coffret: 'Coffret',
+};
+
+// Gallery images: use images array or fallback to main image
+const galleryImages = images && images.length > 0 ? images : [image];
+
+// Related products: same category, exclude current, max 3
+const allProducts = await getCollection('products');
+const relatedProducts = allProducts
+  .filter((p) => p.data.category === category && p.id !== product.id)
+  .slice(0, 3);
+
+// Product data for cart (passed to client JS)
+const productData = JSON.stringify({
+  slug: product.id.replace(/\.md$/, ''),
+  name,
+  price,
+  image,
+});
+---
+
+<Layout title={`${name} — Savonnerie Loulye`} description={description}>
+
+  <!-- ═══ BREADCRUMB ═══ -->
+  <nav class="bg-beige py-4" aria-label="Fil d'Ariane">
+    <div class="container-site">
+      <ol class="flex items-center gap-2 text-sm text-gray-500">
+        <li><a href="/" class="hover:text-ocre transition-colors">Accueil</a></li>
+        <li><span class="mx-1">/</span></li>
+        <li><a href="/boutique" class="hover:text-ocre transition-colors">Boutique</a></li>
+        <li><span class="mx-1">/</span></li>
+        <li class="text-gray-800 font-medium truncate">{name}</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ═══ PRODUIT ═══ -->
+  <section class="py-12 sm:py-16">
+    <div class="container-site">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+
+        <!-- ─── GALERIE ─── -->
+        <div class="space-y-4">
+          <div class="aspect-square overflow-hidden rounded-sm bg-white shadow-sm">
+            <img
+              id="main-image"
+              src={galleryImages[0]}
+              alt={name}
+              class="w-full h-full object-cover transition-opacity duration-300"
+            />
+          </div>
+          {galleryImages.length > 1 && (
+            <div class="grid grid-cols-4 gap-3" id="thumbnails">
+              {galleryImages.map((img, i) => (
+                <button
+                  data-src={img}
+                  class:list={[
+                    'thumb-btn aspect-square overflow-hidden rounded-sm border-2 transition-all duration-200 cursor-pointer',
+                    i === 0 ? 'border-ocre' : 'border-transparent hover:border-lin'
+                  ]}
+                  aria-label={`Image ${i + 1} de ${name}`}
+                >
+                  <img src={img} alt={`${name} - vue ${i + 1}`} class="w-full h-full object-cover" loading="lazy" />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <!-- ─── INFOS PRODUIT ─── -->
+        <div class="flex flex-col">
+          <span class="text-ocre text-sm font-medium tracking-widest uppercase">
+            {categoryLabels[category] || category}
+          </span>
+          <h1 class="mt-2 font-serif text-3xl sm:text-4xl font-semibold text-gray-800 leading-snug">
+            {name}
+          </h1>
+          <p class="mt-4 text-2xl font-semibold text-ocre">
+            {price.toFixed(2).replace('.', ',')}&nbsp;&euro;
+          </p>
+          {weight && (
+            <p class="mt-1 text-sm text-gray-500">{weight}</p>
+          )}
+
+          <div class="mt-6 border-t border-lin/50 pt-6">
+            <p class="text-gray-600 leading-relaxed">{description}</p>
+          </div>
+
+          {ingredients && ingredients.length > 0 && (
+            <div class="mt-6">
+              <h3 class="text-sm font-semibold text-gray-800 uppercase tracking-wide mb-3">
+                {category === 'coffret' ? 'Contenu' : 'Composition'}
+              </h3>
+              <ul class="space-y-1.5">
+                {ingredients.map((ingredient) => (
+                  <li class="flex items-start gap-2 text-sm text-gray-600">
+                    <svg class="w-4 h-4 text-vert-doux mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                    {ingredient}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <!-- Sélecteur quantité + Ajouter au panier -->
+          {inStock ? (
+            <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+              <div class="flex items-center border border-lin rounded-sm">
+                <button id="qty-minus" class="px-4 py-3 text-gray-600 hover:text-ocre transition-colors text-lg font-medium" aria-label="Diminuer la quantité">−</button>
+                <span id="qty-value" class="px-4 py-3 font-medium text-gray-800 min-w-[3rem] text-center border-x border-lin">1</span>
+                <button id="qty-plus" class="px-4 py-3 text-gray-600 hover:text-ocre transition-colors text-lg font-medium" aria-label="Augmenter la quantité">+</button>
+              </div>
+              <button
+                id="add-to-cart"
+                data-product={productData}
+                class="btn-primary flex-1 sm:flex-none gap-2"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" /></svg>
+                Ajouter au panier
+              </button>
+            </div>
+          ) : (
+            <div class="mt-8">
+              <p class="text-gray-500 font-medium bg-beige px-4 py-3 rounded-sm text-center">
+                Temporairement indisponible
+              </p>
+            </div>
+          )}
+
+          <!-- Confirmation message -->
+          <div id="cart-confirmation" class="hidden mt-4 bg-vert-doux/15 text-vert-doux border border-vert-doux/30 px-4 py-3 rounded-sm text-sm font-medium flex items-center gap-2">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            <span>Produit ajouté au panier !</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VOUS AIMEREZ AUSSI ═══ -->
+  {relatedProducts.length > 0 && (
+    <section class="py-16 sm:py-20 bg-beige">
+      <div class="container-site">
+        <h2 class="font-serif text-2xl sm:text-3xl font-semibold text-gray-800 text-center mb-10">
+          Vous aimerez aussi
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {relatedProducts.map((p) => (
+            <ProductCard
+              slug={p.id.replace(/\.md$/, '')}
+              name={p.data.name}
+              price={p.data.price}
+              image={p.data.image}
+              shortDescription={p.data.shortDescription}
+              category={p.data.category}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+</Layout>
+
+<script>
+  import { addToCart } from '../../lib/cart.js';
+
+  // ─── Gallery thumbnails ───
+  const mainImage = document.getElementById('main-image') as HTMLImageElement | null;
+  const thumbs = document.querySelectorAll<HTMLButtonElement>('.thumb-btn');
+
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      const src = thumb.dataset.src;
+      if (mainImage && src) {
+        mainImage.style.opacity = '0';
+        setTimeout(() => {
+          mainImage.src = src;
+          mainImage.style.opacity = '1';
+        }, 150);
+      }
+      thumbs.forEach((t) => {
+        t.classList.remove('border-ocre');
+        t.classList.add('border-transparent');
+      });
+      thumb.classList.remove('border-transparent');
+      thumb.classList.add('border-ocre');
+    });
+  });
+
+  // ─── Quantity selector ───
+  const qtyValue = document.getElementById('qty-value');
+  const qtyMinus = document.getElementById('qty-minus');
+  const qtyPlus = document.getElementById('qty-plus');
+  let qty = 1;
+
+  qtyMinus?.addEventListener('click', () => {
+    if (qty > 1) {
+      qty--;
+      if (qtyValue) qtyValue.textContent = String(qty);
+    }
+  });
+
+  qtyPlus?.addEventListener('click', () => {
+    if (qty < 10) {
+      qty++;
+      if (qtyValue) qtyValue.textContent = String(qty);
+    }
+  });
+
+  // ─── Add to cart ───
+  const addBtn = document.getElementById('add-to-cart') as HTMLButtonElement | null;
+  const confirmation = document.getElementById('cart-confirmation');
+
+  addBtn?.addEventListener('click', () => {
+    const productStr = addBtn.dataset.product;
+    if (!productStr) return;
+    const product = JSON.parse(productStr);
+    addToCart(product, qty);
+
+    // Show confirmation
+    if (confirmation) {
+      confirmation.classList.remove('hidden');
+      setTimeout(() => {
+        confirmation.classList.add('hidden');
+      }, 3000);
+    }
+
+    // Dispatch event for header badge
+    document.dispatchEvent(new CustomEvent('cart-updated'));
+  });
+</script>
